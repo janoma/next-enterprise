@@ -6,6 +6,10 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 
 const tooltipContent = cva([], {
+  defaultVariants: {
+    intent: "primary",
+    size: "md",
+  },
   variants: {
     intent: {
       primary: ["rounded-0.5md", "bg-zinc-700", "font-open-sans", "text-white"],
@@ -14,13 +18,13 @@ const tooltipContent = cva([], {
       md: ["px-4", "py-2.5", "text-2xs"],
     },
   },
+});
+
+const tooltipArrow = cva([], {
   defaultVariants: {
     intent: "primary",
     size: "md",
   },
-});
-
-const tooltipArrow = cva([], {
   variants: {
     intent: {
       primary: ["fill-zinc-700"],
@@ -29,53 +33,49 @@ const tooltipArrow = cva([], {
       md: ["w-4", "h-2"],
     },
   },
-  defaultVariants: {
-    intent: "primary",
-    size: "md",
-  },
 });
 
 export interface TooltipProps
-  extends VariantProps<typeof tooltipContent>,
-    RadixTooltip.TooltipProps {
-  explainer: React.ReactElement | string;
+  extends RadixTooltip.TooltipProps,
+    VariantProps<typeof tooltipContent> {
   children: React.ReactElement;
   className?: string;
+  explainer: React.ReactElement | string;
+  side?: "bottom" | "left" | "right" | "top";
   withArrow?: boolean;
-  side?: "top" | "right" | "bottom" | "left";
 }
 
 export function Tooltip({
   children,
-  explainer,
-  open,
-  defaultOpen,
-  onOpenChange,
-  intent,
-  size,
-  side = "top",
   className,
+  defaultOpen,
+  explainer,
+  intent,
+  onOpenChange,
+  open,
+  side = "top",
+  size,
   withArrow,
 }: TooltipProps) {
   return (
     <RadixTooltip.Provider>
       <RadixTooltip.Root
-        open={open}
         defaultOpen={defaultOpen}
-        onOpenChange={onOpenChange}
         delayDuration={200}
+        onOpenChange={onOpenChange}
+        open={open}
       >
         <RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>
         <RadixTooltip.Portal>
           <RadixTooltip.Content
+            className={twMerge(tooltipContent({ className, intent, size }))}
             side={side}
             sideOffset={5}
-            className={twMerge(tooltipContent({ intent, size, className }))}
           >
             {explainer}
             {withArrow ? (
               <RadixTooltip.Arrow
-                className={twMerge(tooltipArrow({ intent, size, className }))}
+                className={twMerge(tooltipArrow({ className, intent, size }))}
               />
             ) : null}
           </RadixTooltip.Content>

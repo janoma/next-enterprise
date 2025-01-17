@@ -1,5 +1,4 @@
 import { cva, type VariantProps } from "class-variance-authority";
-
 import { twMerge } from "tailwind-merge";
 
 const button = cva(
@@ -15,6 +14,10 @@ const button = cva(
     "delay-50",
   ],
   {
+    defaultVariants: {
+      intent: "primary",
+      size: "lg",
+    },
     variants: {
       intent: {
         primary: ["bg-blue-400", "text-white", "hover:enabled:bg-blue-700"],
@@ -26,14 +29,10 @@ const button = cva(
         ],
       },
       size: {
-        sm: ["min-w-20", "h-full", "min-h-10", "text-sm", "py-1.5", "px-4"],
         lg: ["min-w-32", "h-full", "min-h-12", "text-lg", "py-2.5", "px-6"],
+        sm: ["min-w-20", "h-full", "min-h-10", "text-sm", "py-1.5", "px-4"],
       },
-      underline: { true: ["underline"], false: [] },
-    },
-    defaultVariants: {
-      intent: "primary",
-      size: "lg",
+      underline: { false: [], true: ["underline"] },
     },
   },
 );
@@ -41,8 +40,8 @@ const button = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLAnchorElement>,
     VariantProps<typeof button> {
-  underline?: boolean;
   href: string;
+  underline?: boolean;
 }
 
 export function Button({
@@ -54,7 +53,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <a
-      className={twMerge(button({ intent, size, className, underline }))}
+      className={twMerge(button({ className, intent, size, underline }))}
       {...props}
     >
       {props.children}
