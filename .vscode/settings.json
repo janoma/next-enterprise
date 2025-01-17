@@ -1,5 +1,11 @@
 {
   "tailwindCSS.experimental.classRegex": [
     ["cva(?:<[^>]*>)?(([^)]*))", "[\"'`]([^\"'`]*).*?[\"'`]", "(?:twMerge|twJoin)\\(([^\\);]*)[\\);]"]
-  ]
+  ],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
