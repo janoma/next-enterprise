@@ -19,11 +19,11 @@ jobs:
         with:
           node-version: "${{ env.node_version }}"
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
       - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
+        run: pnpm playwright install --with-deps
       - name: Run Playwright tests
-        run: yarn playwright test
+        run: pnpm playwright test
       - uses: actions/upload-artifact@v3
         if: always()
         with:

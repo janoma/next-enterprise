@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* eslint-disable no-console */
+
 /**
  * Copyright (c) HashiCorp, Inc.
  * SPDX-License-Identifier: MPL-2.0
@@ -7,9 +7,9 @@
 
 // edited to work with the appdir by @raphaelbadia
 
+const fs = require("fs")
 const gzSize = require("gzip-size")
 const mkdirp = require("mkdirp")
-const fs = require("fs")
 const path = require("path")
 
 // Pull options from `package.json`
@@ -78,20 +78,23 @@ fs.writeFileSync(path.join(nextMetaRoot, "analyze/__bundle_analysis.json"), rawD
 // Util Functions
 // --------------
 
-// given an array of scripts, return the total of their combined file sizes
-function getScriptSizes(scriptPaths) {
-  const res = scriptPaths.reduce(
-    (acc, scriptPath) => {
-      const [rawSize, gzipSize] = getScriptSize(scriptPath)
-      acc.raw += rawSize
-      acc.gzip += gzipSize
+/**
+ * Gets the output build directory, defaults to `.next`
+ *
+ * @param {object} options the options parsed from package.json.nextBundleAnalysis using `getOptions`
+ * @returns {string}
+ */
+function getBuildOutputDirectory(options) {
+  return options.buildOutputDirectory || ".next"
+}
 
-      return acc
-    },
-    { raw: 0, gzip: 0 }
-  )
+/**
+ * Reads options from `package.json`
+ */
+function getOptions(pathPrefix = process.cwd()) {
+  const pkg = require(path.join(pathPrefix, "package.json"))
 
-  return res
+  return { ...pkg.nextBundleAnalysis, name: pkg.name }
 }
 
 // given an individual path to a script, return its file size
@@ -99,7 +102,7 @@ function getScriptSize(scriptPath) {
   const encoding = "utf8"
   const p = path.join(nextMetaRoot, scriptPath)
 
-  let rawSize, gzipSize
+  let gzipSize, rawSize
   if (Object.keys(memoryCache).includes(p)) {
     rawSize = memoryCache[p][0]
     gzipSize = memoryCache[p][1]
@@ -113,21 +116,18 @@ function getScriptSize(scriptPath) {
   return [rawSize, gzipSize]
 }
 
-/**
- * Reads options from `package.json`
- */
-function getOptions(pathPrefix = process.cwd()) {
-  const pkg = require(path.join(pathPrefix, "package.json"))
+// given an array of scripts, return the total of their combined file sizes
+function getScriptSizes(scriptPaths) {
+  const res = scriptPaths.reduce(
+    (acc, scriptPath) => {
+      const [rawSize, gzipSize] = getScriptSize(scriptPath)
+      acc.raw += rawSize
+      acc.gzip += gzipSize
 
-  return { ...pkg.nextBundleAnalysis, name: pkg.name }
-}
+      return acc
+    },
+    { gzip: 0, raw: 0 }
+  )
 
-/**
- * Gets the output build directory, defaults to `.next`
- *
- * @param {object} options the options parsed from package.json.nextBundleAnalysis using `getOptions`
- * @returns {string}
- */
-function getBuildOutputDirectory(options) {
-  return options.buildOutputDirectory || ".next"
+  return res
 }

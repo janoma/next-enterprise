@@ -1,8 +1,8 @@
-import type { Config } from "tailwindcss";
-import defaultTheme from "tailwindcss/defaultTheme";
+import type { Config } from "tailwindcss"
+
+import defaultTheme from "tailwindcss/defaultTheme"
 
 export default {
-  darkMode: "class",
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -11,15 +11,29 @@ export default {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
+  plugins: [],
   theme: {
     extend: {
+      borderWidth: {
+        0: "0",
+        2: "2px",
+        3: "3px",
+        4: "4px",
+        6: "6px",
+        8: "8px",
+        DEFAULT: "1px",
+      },
       colors: {
         primary: {
-          50: "#eff6ff",
           100: "#dbeafe",
           200: "#bfdbfe",
           300: "#93c5fd",
           400: "#60a5fa",
+          50: "#eff6ff",
           500: "#3b82f6",
           600: "#2563eb",
           700: "#1d4ed8",
@@ -63,15 +77,6 @@ export default {
           "Noto Color Emoji",
         ],
       },
-      borderWidth: {
-        DEFAULT: "1px",
-        0: "0",
-        2: "2px",
-        3: "3px",
-        4: "4px",
-        6: "6px",
-        8: "8px",
-      },
       minHeight: {
         ...defaultTheme.height,
       },
@@ -80,8 +85,4 @@ export default {
       },
     },
   },
-  plugins: [],
-  future: {
-    hoverOnlyWhenSupported: true,
-  },
-} satisfies Config;
+} satisfies Config
