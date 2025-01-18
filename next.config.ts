@@ -1,23 +1,24 @@
-import withBundleAnalyzer from "@next/bundle-analyzer"
-import { env } from "./env.mjs"
-const withPlugins = require("next-compose-plugins")
+import withBundleAnalyzer from "@next/bundle-analyzer";
+const withPlugins = require("next-compose-plugins");
+
+import { env } from "./env.mjs";
 
 const config = withPlugins([[withBundleAnalyzer({ enabled: env.ANALYZE })]], {
-  reactStrictMode: true,
+  experimental: {},
   logging: {
     fetches: {
       fullUrl: true,
     },
   },
-  experimental: {},
+  reactStrictMode: true,
   rewrites() {
     return [
-      { source: "/healthz", destination: "/api/health" },
-      { source: "/api/healthz", destination: "/api/health" },
-      { source: "/health", destination: "/api/health" },
-      { source: "/ping", destination: "/api/health" },
-    ]
+      { destination: "/api/health", source: "/healthz" },
+      { destination: "/api/health", source: "/api/healthz" },
+      { destination: "/api/health", source: "/health" },
+      { destination: "/api/health", source: "/ping" },
+    ];
   },
-})
+});
 
-export default config
+export default config;

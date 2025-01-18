@@ -50,7 +50,11 @@ export const LP_GRID_ITEMS = [
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M4.5 12.75l6 6 9-13.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M4.5 12.75l6 6 9-13.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
     title: "ESlint & Prettier",
@@ -211,7 +215,11 @@ export const LP_GRID_ITEMS = [
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
     title: "Observability",
@@ -347,14 +355,23 @@ export const LP_GRID_ITEMS = [
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
     title: "Components coupling & cohesion graph",
   },
   {
-    description: "Pre-configured actions for smooth workflows, including Bundle Size and performance stats.",
+    description:
+      "Pre-configured actions for smooth workflows, including Bundle Size and performance stats.",
     icon: (
       <svg
         className="h-6 w-6"
@@ -413,4 +430,4 @@ export const LP_GRID_ITEMS = [
     ),
     title: "Semantic Release",
   },
-]
+];

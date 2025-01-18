@@ -14,5 +14,8 @@ const compat = new FlatCompat({
 const config = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   perfectionist.configs["recommended-alphabetical"],
+  {
+    ignores: ["jest.config.js", "next.config.ts", "report-bundle-size.js"],
+  },
 ]
 export default config
