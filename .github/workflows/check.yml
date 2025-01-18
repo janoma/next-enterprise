@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - master
       - develop
   pull_request:
   workflow_dispatch:
@@ -16,15 +15,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: echo "node_version=$(cat .github/nodejs.version)" >> $GITHUB_ENV
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
       - name: "use node ${{ env.node_version }}"
         uses: actions/setup-node@v3
         with:
           node-version: "${{ env.node_version }}"
+          cache: "pnpm"
       - name: Install dependencies
         run: pnpm install
       - name: Lint check
         run: pnpm lint
       - name: Format check
-        run: pnpm prettier
-      - name: Unit & Integration tests
+        run: pnpm format:check
+      - name: Unit tests
         run: pnpm test

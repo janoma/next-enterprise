@@ -13,6 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: echo "node_version=$(cat .github/nodejs.version)" >> $GITHUB_ENV
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
       - name: "use node ${{ env.node_version }}"
         uses: actions/setup-node@v3
         with:
@@ -23,7 +27,7 @@ jobs:
         run: pnpm playwright install --with-deps
       - name: Run Playwright tests
         run: pnpm playwright test
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
